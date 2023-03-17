@@ -32,7 +32,7 @@ fi
 ## Setup environment
 setup_general_env() {
     conda create --name $BALSAM_CONDA_ENV python=3.9
-    source activate $BALSAM_CONDA_ENV
+    conda activate $BALSAM_CONDA_ENV
     python -m pip install -r requirements.txt
 }
 
