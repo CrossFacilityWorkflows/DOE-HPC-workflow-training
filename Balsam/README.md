@@ -13,7 +13,7 @@ source setup.sh --site [local, ALCF, NERSC or OLCF]
 
 ## Tutorial
 
-Open the tutorial [notebook](balsam_tutorial.ipynb) either at https://jupyter.nersc.gov/ or https://jupyter.alcf.anl.gov/ or follow the instructions below to open jupyter locally:
+Open the tutorial [notebook](balsam_tutorial.ipynb) either at https://jupyter.alcf.anl.gov/ or https://jupyter.nersc.gov/ or https://jupyter.olcf.ornl.gov/. You can also follow the instructions below to open jupyter locally:
 
 ```bash
 jupyter notebook

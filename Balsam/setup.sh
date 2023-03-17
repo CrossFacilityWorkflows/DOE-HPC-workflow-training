@@ -60,7 +60,7 @@ esac
 setup_general_env
 
 ## Setup Jupyter Kernel in JupyterHub
-if [[ "$SITE" == "NERSC" ]]
+if [[ "$SITE" != "local" ]]
 then
     python -m ipykernel install --user --name $BALSAM_CONDA_ENV --display-name $BALSAM_CONDA_ENV
 fi
