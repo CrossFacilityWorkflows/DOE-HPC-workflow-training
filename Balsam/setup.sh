@@ -62,9 +62,8 @@ esac
 setup_general_env
 
 ## Setup Jupyter Kernel in JupyterHub
-if [[ "$SITE" != "local" ]]
+if [[ "$SITE" == "NERSC" ]]
 then
-    python -m ipykernel install --user --name $BALSAM_CONDA_ENV --display-name $BALSAM_CONDA_ENV
     JUPYTER_KERNEL_FOLDER=$HOME/.local/share/jupyter/kernels/$BALSAM_CONDA_ENV/
     mkdir -p $JUPYTER_KERNEL_FOLDER
     cp .kernel.json $JUPYTER_KERNEL_FOLDER/kernel.json
@@ -72,6 +71,7 @@ then
     sed -i -e "s#MODULE_LOAD#$MODULE#g" $JUPYTER_KERNEL_FOLDER/kernel-helper.sh
     sed -i -e "s#CONDA_ENV#$BALSAM_CONDA_ENV#g" $JUPYTER_KERNEL_FOLDER/kernel-helper.sh
     sed -i -e "s#CONDA_ENV#$BALSAM_CONDA_ENV#g" $JUPYTER_KERNEL_FOLDER/kernel.json
-else
+elif [[ "$SITE" == "local" ]]
+then
     python -m pip install jupyter
 fi
