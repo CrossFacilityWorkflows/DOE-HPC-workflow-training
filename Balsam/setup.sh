@@ -31,7 +31,7 @@ fi
 
 ## Setup environment
 setup_general_env() {
-    conda create --name $BALSAM_CONDA_ENV python=3.9 -y
+    conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
     conda activate $BALSAM_CONDA_ENV
     python -m pip install -r requirements.txt
 }
@@ -47,9 +47,11 @@ case "$SITE" in
         ;;
     ALCF)
         module load conda
+        MODULE=conda
         ;;
     NERSC | OLCF)
         module load python
+        MODULE=python
         ;;
     *)
         echo "Error: '$SITE' is not in the list"
@@ -63,4 +65,13 @@ setup_general_env
 if [[ "$SITE" != "local" ]]
 then
     python -m ipykernel install --user --name $BALSAM_CONDA_ENV --display-name $BALSAM_CONDA_ENV
+    JUPYTER_KERNEL_FOLDER=$HOME/.local/share/jupyter/kernels/$BALSAM_CONDA_ENV/
+    mkdir -p $JUPYTER_KERNEL_FOLDER
+    cp .kernel.json $JUPYTER_KERNEL_FOLDER/kernel.json
+    cp .kernel-helper.sh $JUPYTER_KERNEL_FOLDER/kernel-helper.sh
+    sed -i -e "s#MODULE_LOAD#$MODULE#g" $JUPYTER_KERNEL_FOLDER/kernel-helper.sh
+    sed -i -e "s#CONDA_ENV#$BALSAM_CONDA_ENV#g" $JUPYTER_KERNEL_FOLDER/kernel-helper.sh
+    sed -i -e "s#CONDA_ENV#$BALSAM_CONDA_ENV#g" $JUPYTER_KERNEL_FOLDER/kernel.json
+else
+    python -m pip install jupyter
 fi
