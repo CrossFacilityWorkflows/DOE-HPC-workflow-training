@@ -15,10 +15,14 @@ is to simulate a real parallel analysis task
 
 import numpy as np
 from mpi4py import MPI
+import socket
 
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
+
+#verify we're running multinode
+print('hostnames:', socket.gethostname())
 
 # each rank should load the attribute data that we wrote in step 1
 x_diabetes = np.load('x_diabetes.npy')

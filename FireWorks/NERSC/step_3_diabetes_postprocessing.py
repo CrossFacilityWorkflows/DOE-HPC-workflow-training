@@ -28,4 +28,4 @@ df = pd.DataFrame.from_dict(results)
 # print to terminal
 
 print("pearson correlation coefficients for each attribute")
-print(df.head())
+print(df.transpose().head(10))
