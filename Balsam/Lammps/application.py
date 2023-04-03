@@ -29,5 +29,21 @@ class Lammps(ApplicationDefinition):
 
     command_template = '/lus/eagle/projects/datascience/csimpson/lammps/my-lammps/lammps-3Nov2022/src/lmp_polaris_nvhpc_kokkos -in lj.in -k on g {{NGPUS}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
 
+    def postprocess(self):
+        try:
+            with open("energy.dat","r") as f:
+                for line in f:
+                    pass
+                line_entries = line.split()
+                if line_entries[0] == "1000":
+                    self.job.data["final_ke"]=line_entries[1]
+                    self.job.data["final_pe"]=line_entries[2]
+                    self.job.data["final_temp"]=line_entries[3]
+                    self.job.state="POSTPROCESSED"
+                else:
+                    self.job.state="FAILED"
+        except:
+            self.job.state="FAILED"
+
 Lammps.sync()
 

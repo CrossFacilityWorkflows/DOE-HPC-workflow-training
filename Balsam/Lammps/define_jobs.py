@@ -13,8 +13,9 @@ jobs = [Job(app_id="Lammps",
             num_nodes=1,
             ranks_per_node=n_gpus,
             gpus_per_rank=1,
-            threads_per_rank=1, #This sets OMP_NUM_THREADS
+            threads_per_rank=8, #This sets OMP_NUM_THREADS
             launch_params={"cpu_bind":"depth"},
+            tags={"parameter_test":"velocity"}
         )
         for n,v in enumerate(velocities)]
 
