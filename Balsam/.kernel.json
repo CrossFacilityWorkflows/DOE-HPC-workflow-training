@@ -1,0 +1,12 @@
+{
+    "argv": [
+        "{resource_dir}/kernel-helper.sh",
+        "python",
+        "-m",
+        "ipykernel_launcher",
+        "-f",
+        "{connection_file}"
+    ],
+    "display_name": "CONDA_ENV",
+    "language": "python"
+}
