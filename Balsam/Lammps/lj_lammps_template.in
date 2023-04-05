@@ -3,10 +3,13 @@
 variable	x index 8
 variable	y index 8
 variable	z index 8
+variable	tinit index 1.44
 
 variable	xx equal 20*$x
 variable	yy equal 20*$y
 variable	zz equal 20*$z
+
+
 
 units		lj
 atom_style	atomic
@@ -17,7 +20,7 @@ create_box	1 box
 create_atoms	1 box
 mass		1 1.0
 
-velocity	all create 1.44 87287 loop geom
+velocity	all create ${tinit} 87287 loop geom
 
 pair_style	lj/cut 2.5
 pair_coeff	1 1 1.0 1.0 2.5
