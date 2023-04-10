@@ -16,17 +16,20 @@ obtain the Text::CSV module from CPAN, and modify your path such that parallel f
 before the system copy; relative to all that effort, it's much  easier to use --colsep with a
 comma character.
 
-elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/tasks_from_csv> cat input.csv 
+[ketan2@login2.crusher 02_tasks_from_csv]$ cat input.csv 
 "Bob","18","Cherry"
 "Alice","9","Apple"
 "Bort","1","Pipevine"
-elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/tasks_from_csv> cat csv_parse.sh 
+
+[ketan2@login2.crusher 02_tasks_from_csv]$ cat csv_parse.sh 
 #!/bin/bash
 
 module load parallel
 
 parallel --colsep="," echo {1} {3} :::: $1
-elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/tasks_from_csv> ./csv_parse.sh input.csv 
+
+[ketan2@login2.crusher 02_tasks_from_csv]$ ./csv_parse.sh input.csv 
 "Bob" "Cherry"
 "Alice" "Apple"
 "Bort" "Pipevine"
+

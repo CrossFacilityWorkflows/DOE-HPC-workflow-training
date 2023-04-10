@@ -1,3 +1,3 @@
-./data/task_1.txt
-./data/task_two.txt
-./data/tsk-3.txt
+/ccs/home/ketan2/crusherwork/DOE-HPC-workflow-training/GNU-Parallel/OLCF/01_using_find_to_make_input/data/task_1.txt
+/ccs/home/ketan2/crusherwork/DOE-HPC-workflow-training/GNU-Parallel/OLCF/01_using_find_to_make_input/data/task_two.txt
+/ccs/home/ketan2/crusherwork/DOE-HPC-workflow-training/GNU-Parallel/OLCF/01_using_find_to_make_input/data/tsk-3.txt
