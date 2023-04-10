@@ -4,7 +4,7 @@ from balsam.api import Site,Job
 site_name = "ALCF_tutorial"
 site = Site.objects.get(site_name)
 
-finished_jobs = Job.objects.filter(state="JOB_FINISHED",site_id=site.id,tags={"parameter_test":"lat"})
+finished_jobs = Job.objects.filter(state="JOB_FINISHED",site_id=site.id,tags={"parameter_test":"density"})
 
 if finished_jobs.count() > 0:
     efinal = []
