@@ -20,14 +20,14 @@ We'll try to determine which attribute is the greatest
 risk factor for the progression of diabetes. 
 
 - `step_1_diabetes_preprocessing.py`: we load the diabetes dataset,
-  write it to two numpy .npy files
-- `step_2_diabetes_correlation.py`: we load the .npy files and
+  write it to two numpy `.npy` files.
+- `step_2_diabetes_correlation.py`: we load the `.npy` files and
   process each attribute in a separate MPI rank across 2 nodes.
   We calculate the Pearson correlation coefficient between each
   attribute and the measure of disease progression. We gather
   the outputs back to a single file.
-` `step_3_diabetes_postprocessing.py`: we load the Pearson correlation
-  coefficient data and pretty print it to the screen using Pandas
+- `step_3_diabetes_postprocessing.py`: we load the Pearson correlation
+  coefficient data and pretty print it to the screen using pandas.
 
 ## Demo 1- high throughput
 
@@ -72,11 +72,16 @@ links:
 metadata: {}
 ```
 
+You'll need to change the location of the `_launch_dir`.
+
+
 Things to note:
-- We specify the `_category` key to match our task to the right worker resources
+- We specify the `_category` key to match our task to the right worker resources.
 - We specify the `_launch_dir` so that each FireWork will run in this directory.
-  This is important since we are passing files between workflow steps.
-- We specify the task dependencies in the `links` section
+  This is important since we are passing files between workflow steps. Unfortunately
+  we cannot use any bash shortcuts here- we have to specify the absolute path.
+- We specify the task dependencies in the `links` section (2 depends on 1,
+  3 depends on 2). 
 
 Next, let's look at our `my_fworker2.yaml`. This is the worker configuration
 file that will match the `_category: twonode` key in our spec. 
@@ -98,7 +103,6 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml singleshot
 constraint: cpu
 nodes: 2
-ntasks: 1
 account: nstaff
 walltime: '00:05:00'
 queue: debug
@@ -115,11 +119,13 @@ Things to note:
 - We have specified `singleshot` here, since each task within the workflow only needs to run once
 - We have specified the usual Slurm job resources that each task will use
   
-Ok, now that we've examined all the pieces, let's run our FireWorks workflow.
+Now that we've examined all the pieces, let's run our FireWorks workflow.
+
 Note that we are launching the workflow with `qlaunch rapidfire`. Remember that we have
 specified `rlaunch singleshot` in our queue adapter- this will run each task once per job.
-Howeer we need to launch 3 jobs, one for each task. For this reason we use `qlaunch rapidfire`
-to automatically launch our whole workflow.
+However we need to launch 3 jobs, one for each task. For this reason we use `qlaunch rapidfire`
+to automatically launch our whole workflow. `rapidfile` will keep launching jobs until
+there are no more pending FireWorks in the database.
 
 ```
 (fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> qlaunch rapidfire
@@ -215,4 +221,103 @@ only have 3 jobs, for example.
 
 ## Demo 2- heterogenous workflow
 
-Let's make things a little more complicated now. 
+Let's make things a little more complicated now. In this version of the demo,
+we'll have a workflow where step 1 and step 3 only use one node, but step 2
+uses two nodes.
+
+Let's start by looking at our `fw_diabetes_wf.yaml` file
+
+```
+(fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat fw_diabetes_wf.yaml 
+fws:
+- fw_id: 1
+  spec:
+    _category: onenode
+    _launch_dir: /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC  
+    _tasks:
+    - _fw_name: ScriptTask
+      script: srun python step_1_diabetes_preprocessing.py
+- fw_id: 2
+  spec:
+    _category: twonode
+    _launch_dir: /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC
+    _tasks:
+    - _fw_name: ScriptTask
+      script: srun -n 10 --cpu-bind=cores python step_2_diabetes_correlation.py
+- fw_id: 3
+  spec:
+    _category: onenode
+    _launch_dir: /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC
+    _tasks:
+    - _fw_name: ScriptTask
+      script: srun python step_3_diabetes_postprocessing.py
+links:
+  1:
+  - 2
+  2:
+  - 3
+metadata: {}
+```
+
+If we compare this to our `fw_diabetes_ht.yaml` file, the difference is the `_category` key.
+We now have two different categories- `onenode` and `twonode`. These categories correspond
+to two different FireWorker specification files:
+
+```
+(fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_fworker1.yaml 
+name: one node fireworker
+category: onenode
+query: '{}'
+(fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_fworker2.yaml 
+name: two node fireworker
+category: twonode
+query: '{}'
+```
+
+Note that this is the same `my_fworker2.yaml` that we used in demo 1.
+
+Because we need to specify different sets of resources to our scheduler,
+we also need to have two queue adapters- one for the `onenode` case and one
+for the `twonode` case:
+
+```
+(fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_qadapter1.yaml 
+_fw_name: CommonAdapter
+_fw_q_type: SLURM
+rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker1.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
+constraint: cpu
+nodes: 1
+account: nstaff
+walltime: '00:05:00'
+queue: debug
+job_name: null
+logdir: null
+pre_rocket: null
+post_rocket: null
+(fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_qadapter2.yaml 
+_fw_name: CommonAdapter
+_fw_q_type: SLURM
+rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
+constraint: cpu
+nodes: 2  
+account: nstaff
+walltime: '00:05:00'
+queue: debug
+job_name: null
+logdir: null
+pre_rocket: null
+post_rocket: null
+```
+
+We are ready to launch our heterogeneous workflow example. 
+
+Recall that in our first example we did a
+simple `qlaunch singleshot`. We did not specify a specific queue adapter here. If we do not
+specify a specific queue adpater, FireWorks will chose the default file, `my_qadapter.yaml`.
+Our first example worked since this was indeed the name of our queue adapter.
+
+In this example, we will have to launch our workflow using both queue adapters.
+
+
+
+

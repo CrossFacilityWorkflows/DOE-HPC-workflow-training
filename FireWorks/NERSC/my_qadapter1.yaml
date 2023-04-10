@@ -1,9 +1,8 @@
 _fw_name: CommonAdapter
 _fw_q_type: SLURM
-rocket_launch: rlaunch -w my_fworker1.yaml -l my_launchpad.yaml singleshot
+rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker1.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
 constraint: cpu
 nodes: 1
-ntasks: 1
 account: nstaff
 walltime: '00:05:00'
 queue: debug
