@@ -43,8 +43,7 @@ running the `hostname -I` command. For example:
 10.201.0.58 10.140.56.123 172.22.56.104 172.23.56.104 140.221.112.11 
 ```
 
-Make sure you choose the IP address that starts with `10.{}`.
-
+Make sure you choose the IP address that starts with `10.{}`, in the example above copy the first string of numbers `10.201.0.58`.
 
 ```
 stephey@polaris-login-{}:~/mongodb> cat mj.mongod.conf 
