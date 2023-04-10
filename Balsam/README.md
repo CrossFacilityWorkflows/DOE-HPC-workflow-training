@@ -6,25 +6,31 @@ Balsam exercises at ALCF, NERSC, and OLCF.
 This tutorial will show you how to setup a Balsam site and run simulations via Balsam. For this tutorial we are using the application `LAMMPS`, a large scale classical molecular dynamics code that stands for Large-scale Atomic/Molecular Massively Parallel Simulator. 
 
 
-## Setup
+## Installation
 
 To setup the tutorial environment run the following command on the site of your choice:
 ```bash
 source setup.sh --site [local, ALCF, NERSC or OLCF]
 ```
 
-## Tutorial
+## Setup Balsam site
 
-Follow the tutorial via this markdown file or open the [notebook](balsam_tutorial.ipynb).
-
-## Tutorial Setup
-
-Once you have setup your conda environment:
+In terminal log into balsam and create your site in a folder of your choosing:
 ```bash
-source setup.sh --site [local, ALCF, NERSC or OLCF]
+balsam login
+balsam site init -n <doe-site>_tutorial <doe-site>_tutorial
 ```
 
-Follow the tutorial either via by executing the scripts provided in the repo, or via the Jupyter notebook.
+Now start the site:
+```bash
+cd <doe-site>_tutorial
+balsam site start
+cd ..
+```
+
+## Tutorial
+
+Follow the tutorial via the scripts or open the [notebook](balsam_tutorial.ipynb).
 
 ### Scripts
 
@@ -34,6 +40,7 @@ To execute the scripts, run them in order as we progress:
 python 0_application.py
 python 1_define_jobs.py
 python 2_submit_jobs.py
+python 3_plot_results.py
 ```
 
 ### Notebook
@@ -69,17 +76,3 @@ jupyter notebook
 ```
 Note that if you run this notebook locally, you will need to have a copy of the LAMMPs input file and environment file on the machine where you are running LAMMPS.
 
-## Setup Balsam site
-
-In terminal log into balsam and create your site in a folder of your choosing:
-```bash
-balsam login
-balsam site init -n <doe-site>_tutorial <doe-site>_tutorial
-```
-
-Now start the site:
-```bash
-cd <doe-site>_tutorial
-balsam site start
-cd ..
-```
