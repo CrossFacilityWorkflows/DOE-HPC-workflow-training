@@ -28,3 +28,5 @@ if finished_jobs.count() > 0:
     plt.xlabel("Density")
     plt.legend(loc=0)
     plt.savefig("lammps_phases.png")
+else:
+    print("No jobs finished")
