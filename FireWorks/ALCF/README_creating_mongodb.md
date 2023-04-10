@@ -84,13 +84,14 @@ First start a screen session
 
 ```
 screen -S mongodb_fireworks
+(base) stephey@polaris-login-01:~/mongodb> 
+(base) stephey@polaris-login-01:~/mongodb> mongodb-linux-x86_64-suse15-6.0.5/bin/mongod -f mj.mongod.conf &
+[1] 220065
+(base) stephey@polaris-login-01:~/mongodb> 
 ```
 
-Now use our configuration file to start up a MongoDB server
-
-```
-mongodb-linux-x86_64-suse15-6.0.5/bin/mongod -f mj.mongod.conf
-```
+There will be no output from this command- it just starts the
+Mongo server service and puts it in the background.
 
 Now we can detach from this server using `Cntl+a d`, or we can open a new Polaris
 terminal.
@@ -100,7 +101,35 @@ terminal.
 Note you'll need to modify this command depending on the login node IP and port number you chose.
 
 ```
-stephey@polaris-login-01:~/mongodb> mongosh-1.8.0-linux-x64/bin/mongosh --host 10.201.0.58 --port 27560
+(base) stephey@polaris-login-01:~/mongodb> mongosh-1.8.0-linux-x64/bin/mongosh --host 10.201.0.58 --port 27560
+Current Mongosh Log ID:	64344f23521152b24f8ee277
+Connecting to:		mongodb://10.201.0.58:27560/?directConnection=true&appName=mongosh+1.8.0
+Using MongoDB:		6.0.5
+Using Mongosh:		1.8.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-04-10T18:01:43.001+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2023-04-10T18:01:43.003+00:00: You are running on a NUMA machine. We suggest launching mongod like this to avoid performance problems: numactl --interleave=all mongod [other options]
+   2023-04-10T18:01:43.003+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+   2023-04-10T18:01:43.003+00:00: Soft rlimits for open file descriptors too low
+------
+
+------
+   Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+   metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+   
+   The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+   and anyone you share the URL with. MongoDB may use this information to make product
+   improvements and to suggest MongoDB products and deployment options to you.
+   
+   To enable free monitoring, run the following command: db.enableFreeMonitoring()
+   To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+------
+
+test> 
 ```
 
 Using the Mongo Shell, we can create a database called `DATABASE_NAME` for user `DATABASE_USER`
