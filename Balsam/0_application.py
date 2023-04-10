@@ -1,6 +1,9 @@
 from balsam.api import ApplicationDefinition
 
 site_name = "ALCF_tutorial"
+demo_path = "/home/csimpson/polaris/DOE-HPC-workflow-training/Balsam"
+application_env = demo_path+"/ALCF/lammps_envs.sh"
+input_file_path = demo_path+"/lj_lammps_template.in"
 
 class Lammps(ApplicationDefinition):
 
