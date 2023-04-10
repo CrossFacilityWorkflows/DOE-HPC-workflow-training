@@ -22,20 +22,24 @@ class Lammps(ApplicationDefinition):
     command_template = 'lmp -in lj.in -k on g {{NGPUS}} -sf kk -pk kokkos newton on neigh half -var tinit {{tinit}}'
 
     def postprocess(self):
+        dat = self.job.data
+        energy_file = os.path.abspath("energy.dat")
         try:
-            with open("energy.dat","r") as f:
+            with open(energy_file,"r") as f:
                 for line in f:
                     pass
                 line_entries = line.split()
                 if line_entries[0] == "1000":
-                    self.job.data["final_ke"]=line_entries[1]
-                    self.job.data["final_pe"]=line_entries[2]
-                    self.job.data["final_temp"]=line_entries[3]
+                    self.job.data = {**dat,"final_ke":line_entries[1],
+                                    "final_pe":line_entries[2],
+                                    "final_temp":line_entries[3]}
                     self.job.state="POSTPROCESSED"
                 else:
                     self.job.state="FAILED"
+                    self.job.state_data = {"reason": "Final step not reached"}
         except:
             self.job.state="FAILED"
+            self.job.state_data = {"reason": "Energy file not written"}
 
 Lammps.sync()
 

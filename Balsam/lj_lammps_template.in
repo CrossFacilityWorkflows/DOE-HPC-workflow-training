@@ -33,7 +33,7 @@ variable kinetic_energy equal ke
 variable potential_energy equal pe
 variable pressure equal press
 variable temperature equal temp
-fix myat1 all ave/time 10 1 10 v_kinetic_energy v_potential_energy v_temperature file energy.dat
+fix myat1 all ave/time 10 1 10 v_kinetic_energy v_potential_energy v_temperature v_pressure file energy.dat
 
 fix		1 all nve
 
