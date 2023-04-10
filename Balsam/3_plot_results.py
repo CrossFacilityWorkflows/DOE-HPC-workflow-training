@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from balsam.api import Site
+from balsam.api import Site,Job
 
 site_name = "ALCF_tutorial"
 site = Site.objects.get(site_name)
