@@ -1,20 +1,5 @@
 # Installing FireWorks at ALCF- Polaris
 
-Since FireWorks requires Python 3.7 and above, we'll install our own
-Miniconda rather than using the system Python (currently 3.6).
-
-## Installing miniconda
-
-```
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-Do you wish the installer to initialize Miniconda3
-by running conda init? [yes|no]
-yes
-```
-
-For changes to take effect, close and re-open your terminal.
-
 ## Creating a FireWorks conda environment
 
 In the steps that follow we'll create a FireWorks conda environment
@@ -22,10 +7,10 @@ that contains all the depdencies needed to run the demo in this
 tutorial. 
 
 ```
-module load PrgEnv-gnu
+module load PrgEnv-gnu conda
 conda create -n fireworks python=3.9 -y
 conda activate fireworks
-conda install -c conda-forge fireworks pytest numpy scikit-learn pandas
+conda install -c conda-forge fireworks pytest numpy scikit-learn pandas -y
 MPICC="cc -shared" pip install --force-reinstall --no-cache-dir --no-binary=mpi4py mpi4py
 ```
 
@@ -66,4 +51,4 @@ Are you sure? This will RESET 0 workflows and all data. (Y/N)y
 (fireworks) stephey@polaris-login-01:~/fireworks>
 ```
 
-Phew! FireWorks is now ready to help you run workflows.
+FireWorks is now ready to help you run workflows.
