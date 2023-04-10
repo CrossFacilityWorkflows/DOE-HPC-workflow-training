@@ -7,11 +7,10 @@ that contains all the depdencies needed to run the demo in this
 tutorial. 
 
 ```
-module load conda
-module load PrgEnv-gnu
+module load PrgEnv-gnu conda
 conda create -n fireworks python=3.9 -y
 conda activate fireworks
-conda install -c conda-forge fireworks pytest numpy scikit-learn pandas
+conda install -c conda-forge fireworks pytest numpy scikit-learn pandas -y
 MPICC="cc -shared" pip install --force-reinstall --no-cache-dir --no-binary=mpi4py mpi4py
 ```
 
@@ -52,4 +51,4 @@ Are you sure? This will RESET 0 workflows and all data. (Y/N)y
 (fireworks) stephey@polaris-login-01:~/fireworks>
 ```
 
-Phew! FireWorks is now ready to help you run workflows.
+FireWorks is now ready to help you run workflows.
