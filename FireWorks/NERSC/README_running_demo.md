@@ -36,8 +36,6 @@ same amount of resources (2 CPU nodes). FireWorks is a bit more
 natually suited to this kind of workflow and requires less configuration
 so we'll start here. 
 
-Note that step 2 deponds on step 1, and step 3 depends on step 2.
-
 Let's start by looking at our high-throughput FireWork:
 
 ```
@@ -72,7 +70,8 @@ links:
 metadata: {}
 ```
 
-You'll need to change the location of the `_launch_dir`.
+Note: you'll need to change the location of the `_launch_dir`
+to your own directory.
 
 
 Things to note:
@@ -93,8 +92,8 @@ category: twonode
 query: '{}'
 ```
 
-Next, let's look at our `my_qadapter.yaml`. At NERSC we use a SLURM adapter- on other systems, you can
-substitue the appropriate adapter.
+Next, let's look at our `my_qadapter.yaml`. At NERSC we use a Slurm adapter- on other systems, you can
+substitue the [appropriate adapter](https://github.com/materialsproject/fireworks/tree/bd2bb5078122fa27a7dda2084abb3af8cac05436/fw_tutorials/queue).
 
 ```
 (fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_qadapter.yaml
@@ -116,8 +115,8 @@ Things to note:
 - We unfortuatnely have to specify the full paths
   to `my_launchpad.yaml` and `my_fworker2.yaml`- bash shortcuts
   are not supported.
-- We have specified `singleshot` here, since each task within the workflow only needs to run once
-- We have specified the usual Slurm job resources that each task will use
+- We have specified `singleshot` here, since each task within the workflow only needs to run once.
+- We have specified the usual Slurm job resources that each task will use.
   
 Now that we've examined all the pieces, let's run our FireWorks workflow.
 
@@ -261,7 +260,7 @@ metadata: {}
 
 If we compare this to our `fw_diabetes_ht.yaml` file, the difference is the `_category` key.
 We now have two different categories- `onenode` and `twonode`. These categories correspond
-to two different FireWorker specification files:
+to two different FireWorker specification files `my_fworker.yaml`:
 
 ```
 (fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> cat my_fworker1.yaml 
@@ -312,12 +311,62 @@ post_rocket: null
 We are ready to launch our heterogeneous workflow example. 
 
 Recall that in our first example we did a
-simple `qlaunch singleshot`. We did not specify a specific queue adapter here. If we do not
+simple `qlaunch rapidfire`. We did not specify a specific queue adapter here. If we do not
 specify a specific queue adpater, FireWorks will chose the default file, `my_qadapter.yaml`.
-Our first example worked since this was indeed the name of our queue adapter.
 
-In this example, we will have to launch our workflow using both queue adapters.
+However in this example, we will have to launch our workflow using both queue adapters
+`my_qadapter1.yaml` and `my_qadapter2.yaml`. Note that we specify the corresponding
+`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adpater
+file.
 
+To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands.
 
+```
+lpad reset
+lpad add fw_diabetes_wf.yaml
+qlaunch -q my_qadapter1.yaml rapidfure & qlaunch -q my_quadapter2.yaml rapidfire
+```
 
+If you like, you can open a second terimnal to monitor the job status with
+```
+lpad get_fws
+```
+to watch each step run and complete.
 
+When this workflow is done running, you will need to Control+C to get your terminal back.
+
+In this example we submitted quite a few "no-op" jobs, but
+the behavior is similar to what we saw in demo 1. `qlaunch rapidfire`
+will keep launching jobs associated with both `onenode` and `twonode` tasks
+until the database detects that they have completed. 
+
+Take a look inside your `block_<date>` folder to see all of the jobs
+FireWorks launched to complete this workflow. Check to see if you find
+the same outputs as demo 1.
+
+```
+(fireworks)stephey@perlmutter:login36:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/block_2023-04-10-04-45-27-649185> grep -r "attribute" .
+./launcher_2023-04-10-04-46-37-996867/FW_job-7212373.out:pearson correlation coefficients for each attribute
+(fireworks)stephey@perlmutter:login36:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/block_2023-04-10-04-45-27-649185> cat ./launcher_2023-04-10-04-46-37-996867/FW_job-7212373.out
+2023-04-09 21:46:41,758 INFO Hostname/IP lookup (this will take a few seconds)
+2023-04-09 21:46:41,769 INFO Launching Rocket
+2023-04-09 21:46:41,907 INFO RUNNING fw_id: 3 in directory: /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC
+2023-04-09 21:46:41,915 INFO Task started: ScriptTask.
+pearson correlation coefficients for each attribute
+                                   0
+age                         0.187889
+sex                         0.043062
+body_mass_index             0.586450
+blood_pressure              0.441482
+total_cholesterol           0.212022
+ldl_cholesterol             0.174054
+hdl_cholesterol            -0.394789
+total/hdl_cholesterol       0.430453
+log_of_serum_triglycerides  0.565883
+blood_sugar_level           0.382483
+2023-04-09 21:46:42,564 INFO Task completed: ScriptTask
+2023-04-09 21:46:42,579 INFO Rocket finished
+(fireworks)stephey@perlmutter:login36:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/block_2023-04-10-04-45-27-649185> 
+```
+
+Indeed we do!

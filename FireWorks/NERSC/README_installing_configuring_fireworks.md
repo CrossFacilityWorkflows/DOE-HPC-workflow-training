@@ -23,7 +23,7 @@ in the registration form for this workshop, please follow the instructions
 in the `mongodb_existing_nersc_users.pdf` PDF in this folder.
 
 If you are using a NERSC test account, please follow the instructions in the
-`mongodb_existing_nersc_users.pdf` PDF in this folder. Note
+`nersc_training_and_mongodb.pdf` PDF in this folder. Note
 that a MongoDB has been created for every test account in this
 training.
 
