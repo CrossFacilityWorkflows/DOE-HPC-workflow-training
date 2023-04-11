@@ -18,7 +18,7 @@ so we're using Python 3.9 in this example.
 
 ## Configuring your MongoDB
 
-If you are an exising NERSC user and requested a MongoDB
+If you are an existing NERSC user and requested a MongoDB
 in the registration form for this workshop, please follow the instructions
 in the `mongodb_existing_nersc_users.pdf` PDF in this folder.
 
@@ -29,7 +29,7 @@ training.
 
 ## Configuring FireWorks
 
-Once you have your MongoDB credentials and your FireWorks enviroment
+Once you have your MongoDB credentials and your FireWorks environment
 created, you can configure your FireWorks LaunchPad. Note you will 
 need to enter the hostname of your database, the port number of
 your database, the name of your database, and your admin password.

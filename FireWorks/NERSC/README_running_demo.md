@@ -33,7 +33,7 @@ risk factor for the progression of diabetes.
 
 In this version of the demo, steps 1, 2, and 3 will all use the 
 same amount of resources (2 CPU nodes). FireWorks is a bit more
-natually suited to this kind of workflow and requires less configuration
+naturally suited to this kind of workflow and requires less configuration
 so we'll start here. 
 
 Let's start by looking at our high-throughput FireWork:
@@ -112,11 +112,12 @@ post_rocket: null
 ```
 
 Things to note:
-- We unfortuatnely have to specify the full paths
+- We unfortunately have to specify the full paths
   to `my_launchpad.yaml` and `my_fworker2.yaml`- bash shortcuts
   are not supported.
 - We have specified `singleshot` here, since each task within the workflow only needs to run once.
 - We have specified the usual Slurm job resources that each task will use.
+- You'll need to modify these paths and your NERSC project account.
   
 Now that we've examined all the pieces, let's run our FireWorks workflow. We are launching
 this workflow from a Perlmutter login node with our `fireworks` conda environment
@@ -310,15 +311,18 @@ pre_rocket: null
 post_rocket: null
 ```
 
+Note you'll need to modify your queue adapter files to use your own files,
+your own NERSC project account, etc.
+
 We are ready to launch our heterogeneous workflow example. 
 
 Recall that in our first example we did a
-simple `qlaunch rapidfire`. We did not specify a specific queue adapter here. If we do not
-specify a specific queue adpater, FireWorks will chose the default file, `my_qadapter.yaml`.
+simple `qlaunch rapidfire`. We did not specify a specific queue adapter. If we do not
+specify a specific queue adapter, FireWorks will chose the default file, `my_qadapter.yaml`.
 
 However in this example, we will have to launch our workflow using both queue adapters
 `my_qadapter1.yaml` and `my_qadapter2.yaml`. Note that we specify the corresponding
-`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adpater
+`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adapter
 file.
 
 To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands.
@@ -332,7 +336,7 @@ lpad add fw_diabetes_wf.yaml
 qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_quadapter2.yaml rapidfire
 ```
 
-If you like, you can open a second terimnal to monitor the job status with
+If you like, you can open a second terminal to monitor the job status with
 ```
 lpad get_fws
 ```

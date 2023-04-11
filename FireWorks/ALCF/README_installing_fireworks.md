@@ -3,7 +3,7 @@
 ## Creating a FireWorks conda environment
 
 In the steps that follow we'll create a FireWorks conda environment
-that contains all the depdencies needed to run the demo in this
+that contains all the dependencies needed to run the demo in this
 tutorial. 
 
 ```
