@@ -148,6 +148,10 @@ However we need to launch 3 jobs, one for each task. For this reason we use `qla
 to automatically launch our whole workflow. `rapidfile` will keep launching jobs until
 there are no more pending FireWorks in the database.
 
+Note
+we are issuing these commands from a Polaris login node with our `fireworks` conda
+environment activated.
+
 Due to [queue restrictions](https://docs.alcf.anl.gov/polaris/running-jobs/)
 on Polaris, we will use `qlaunch rapidfire -m 1` to launch one job at a time
 since we are using the `debug-scaling` queue. Other queues may not need this
@@ -239,5 +243,157 @@ Let's make things a little more complicated now. In this version of the demo,
 we'll have a workflow where step 1 and step 3 only use one node, but step 2
 uses two nodes.
 
+Let's start by looking at our `fw_diabetes_wf.yaml` file
 
+```
+(2022-09-08/fireworks) stephey@polaris-login-01:~/DOE-HPC-workflow-training/FireWorks/ALCF> cat fw_diabetes_wf.yaml 
+fws:
+- fw_id: 1
+  spec:
+    _category: onenode
+    _launch_dir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF 
+    _tasks:
+    - _fw_name: ScriptTask
+      script: mpiexec -n 1 python step_1_diabetes_preprocessing.py
+- fw_id: 2
+  spec:
+    _category: twonode
+    _launch_dir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF
+    _tasks:
+    - _fw_name: ScriptTask
+      script: mpiexec -n 10 python step_2_diabetes_correlation.py
+- fw_id: 3
+  spec:
+    _category: onenode
+    _launch_dir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF
+    _tasks:
+    - _fw_name: ScriptTask
+      script: mpiexec -n 1 python step_3_diabetes_postprocessing.py
+links:
+  1:
+  - 2
+  2:
+  - 3
+metadata: {}
+```
 
+If we compare this to our `fw_diabetes_ht.yaml` file, the difference is the `_category` key.
+We now have two different categories- `onenode` and `twonode`. These categories correspond
+to two different FireWorker specification files `my_fworker.yaml`:
+
+```
+(2022-09-08/fireworks) stephey@polaris-login-01:~/DOE-HPC-workflow-training/FireWorks/ALCF> cat my_fworker1.yaml 
+name: one node fireworker
+category: onenode
+query: '{}'
+(2022-09-08/fireworks) stephey@polaris-login-01:~/DOE-HPC-workflow-training/FireWorks/ALCF> cat my_fworker2.yaml 
+name: two node fireworker
+category: twonode
+query: '{}
+```
+
+Note that this is the same `my_fworker2.yaml` that we used in demo 1.
+
+Because we need to specify different sets of resources to our scheduler,
+we also need to have two queue adapters- one for the `onenode` case and one
+for the `twonode` case:
+
+```
+(2022-09-08/fireworks) stephey@polaris-login-01:~/DOE-HPC-workflow-training/FireWorks/ALCF> cat my_qadapter1.yaml 
+_fw_name: CommonAdapter
+_fw_q_type: PBS
+rocket_launch: rlaunch -l /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_launchpad.yaml -w /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_fworker1.yaml singleshot
+nnodes: 1
+ppnode: 1
+walltime: '00:05:00'
+queue: preemptable
+account: WALSforAll
+filesystems: home:eagle
+job_name: null
+logdir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/
+pre_rocket: module load conda; conda activate fireworks
+post_rocket: null
+(2022-09-08/fireworks) stephey@polaris-login-01:~/DOE-HPC-workflow-training/FireWorks/ALCF> cat my_qadapter2.yaml 
+_fw_name: CommonAdapter
+_fw_q_type: PBS
+rocket_launch: rlaunch -l /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_launchpad.yaml -w /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_fworker2.yaml singleshot
+nnodes: 2
+ppnode: 1
+walltime: '00:05:00'
+queue: preemptable
+account: WALSforAll
+filesystems: home:eagle
+job_name: null
+logdir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/
+pre_rocket: module load conda; conda activate fireworks
+post_rocket: null
+```
+
+We are ready to launch our heterogeneous workflow example. 
+
+Recall that in our first example we did a
+simple `qlaunch rapidfire -m 1`. We did not specify a specific queue adapter here. If we do not
+specify a specific queue adpater, FireWorks will chose the default file, `my_qadapter.yaml`.
+
+However in this example, we will have to launch our workflow using both queue adapters
+`my_qadapter1.yaml` and `my_qadapter2.yaml`. Note that we specify the corresponding
+`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adpater
+file.
+
+To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands. Note
+we are issuing these commands from a Polaris login node with our `fireworks` conda
+environment activated.
+
+To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands.
+
+```
+lpad reset
+lpad add fw_diabetes_wf.yaml
+qlaunch -q my_qadapter1.yaml rapidfire -m 1 & qlaunch -q my_qadapter2.yaml rapidfire -m 1
+```
+
+Note we are limiting the number of jobs we allow FireWorks to submit due to the
+[Polaris queue policies](https://docs.alcf.anl.gov/polaris/running-jobs/).
+
+If you like, you can open a second terimnal to monitor the job status with
+```
+lpad get_fws
+```
+to watch each step run and complete.
+
+When this workflow is done running, you may need to Control+C to get your terminal back.
+
+In this example we submitted quite a few "no-op" jobs, but
+the behavior is similar to what we saw in demo 1. `qlaunch rapidfire`
+will keep launching jobs associated with both `onenode` and `twonode` tasks
+until the database detects that they have completed. 
+
+Take a look inside your `block_<date>` folder to see all of the jobs
+FireWorks launched to complete this workflow. Check to see if you find
+the same outputs as demo 1.
+
+```
+(2022-09-08/fireworks) stephey@polaris-login-04:~/DOE-HPC-workflow-training/FireWorks/ALCF/block_2023-04-11-17-46-48-104096> grep -r "attribute" .
+./launcher_2023-04-11-17-48-51-801326/FW_job.out:pearson correlation coefficients for each attribute
+(2022-09-08/fireworks) stephey@polaris-login-04:~/DOE-HPC-workflow-training/FireWorks/ALCF/block_2023-04-11-17-46-48-104096> cat ./launcher_2023-04-11-17-48-51-801326/FW_job.out
+2023-04-11 17:48:58,901 INFO Hostname/IP lookup (this will take a few seconds)
+2023-04-11 17:48:58,903 INFO Launching Rocket
+2023-04-11 17:48:58,966 INFO RUNNING fw_id: 3 in directory: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF
+2023-04-11 17:48:58,972 INFO Task started: ScriptTask.
+pearson correlation coefficients for each attribute
+                                   0
+age                         0.187889
+sex                         0.043062
+body_mass_index             0.586450
+blood_pressure              0.441482
+total_cholesterol           0.212022
+ldl_cholesterol             0.174054
+hdl_cholesterol            -0.394789
+total/hdl_cholesterol       0.430453
+log_of_serum_triglycerides  0.565883
+blood_sugar_level           0.382483
+2023-04-11 17:48:59,417 INFO Task completed: ScriptTask
+2023-04-11 17:48:59,426 INFO Rocket finished
+```
+
+Indeed we do!
