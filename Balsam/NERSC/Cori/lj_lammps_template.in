@@ -1,0 +1,41 @@
+# 3d Lennard-Jones melt
+
+variable	x index 1
+variable	y index 1
+variable	z index 1
+variable	tinit index 1.44
+variable	lat_scale index 0.8442
+
+variable	xx equal 20*$x
+variable	yy equal 20*$y
+variable	zz equal 20*$z
+
+
+
+units		lj
+atom_style	atomic
+
+lattice		fcc ${lat_scale}
+region		box block 0 ${xx} 0 ${yy} 0 ${zz}
+create_box	1 box
+create_atoms	1 box
+mass		1 1.0
+
+velocity	all create ${tinit} 87287 loop geom
+
+pair_style	lj/cut 2.5
+pair_coeff	1 1 1.0 1.0 2.5
+
+neighbor	0.3 bin
+neigh_modify	delay 0 every 20 check no
+
+thermo 10
+variable kinetic_energy equal ke
+variable potential_energy equal pe
+variable pressure equal press
+variable temperature equal temp
+fix myat1 all ave/time 10 1 10 v_kinetic_energy v_potential_energy v_temperature v_pressure file energy.dat
+
+fix		1 all nve
+
+run		1000
