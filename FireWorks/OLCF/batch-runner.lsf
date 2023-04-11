@@ -1,0 +1,13 @@
+#BSUB -P stf019
+#BSUB -W 10
+#BSUB -nnodes 1
+
+#BSUB -J batch-runner
+#BSUB -o batch-runner.o%J
+#BSUB -e batch-runner.e%J
+
+DEMO_DIR=${PROJWORK}/stf019/test-fireworks/
+
+source ${DEMO_DIR}/setup-summit.bash
+
+python3 ${DEMO_DIR}/run-workflow.py
