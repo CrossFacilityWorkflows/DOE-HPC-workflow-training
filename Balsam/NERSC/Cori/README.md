@@ -2,7 +2,7 @@
 
 ## Setup Balsam site
 
-In terminal log into balsam and create your site in a folder of your choosing:
+In a terminal on Cori, log into balsam and create your site:
 ```bash
 balsam login
 balsam site init -n cori_tutorial cori_tutorial

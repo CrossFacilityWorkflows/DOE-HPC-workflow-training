@@ -2,7 +2,7 @@
 
 ## Setup Balsam site
 
-In terminal log into balsam and create your site in a folder of your choosing:
+In a terminal on Summit, log into balsam and create your site:
 ```bash
 balsam login
 balsam site init -n summit_tutorial summit_tutorial
@@ -17,7 +17,7 @@ cd ..
 
 ## How to run the tutorial
 
-Follow the tutorial either with the scripts or with the jupyter notebook [notebook](balsam_tutorial.ipynb).
+Follow the tutorial either with the scripts or with the jupyter [notebook](balsam_tutorial.ipynb).
 
 ### Scripts
 
