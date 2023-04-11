@@ -6,11 +6,6 @@ based on the input filename and writing them in the same location as the input.
 
 This begins with the find command found in build_then_use_task_list.sh:
 find $PWD -type f | grep txt | sort > tasks
- 
-The find command will recursively report descendent files from the path it is given, in this case the $PWD variable
-reports our working directory:
-elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input> echo $PWD
-/global/homes/e/elvis/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input
 
 This is piped to a grep command which seeks only file paths containing txt (the extension present on all our data files).
 Careful your search string doesn't include any substrings from the path out of $PWD.
