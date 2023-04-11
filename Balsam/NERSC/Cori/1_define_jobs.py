@@ -2,8 +2,7 @@ from balsam.api import Job
 import numpy as np
 import os
 
-n_gpus = 4
-site_name = "NERSC_tutorial"
+site_name = "cori_tutorial"
 demo_path = os.getcwd()
 input_file_path = os.path.join(demo_path,"lj_lammps_template.in")
 
@@ -15,7 +14,7 @@ jobs = [Job(app_id="Lammps",
             parameters={"tinit":1.5, "lat_scale": lat_scale,"input_file_path":input_file_path},
             num_nodes=1,
             ranks_per_node=32,
-            threads_per_core=1, 
+            threads_per_core=1,
             launch_params={"cpu_bind":"depth"},
             tags={"parameter_test":"density"},
         )
