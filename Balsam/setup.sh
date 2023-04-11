@@ -30,12 +30,6 @@ fi
 
 
 ## Setup environment
-setup_general_env() {
-    conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
-    conda activate $BALSAM_CONDA_ENV
-    python -m pip install -r requirements.txt
-}
-
 SITE=$2
 case "$SITE" in
     local)
@@ -44,22 +38,34 @@ case "$SITE" in
             echo "Error: conda required for setup"
             exit_abnormal
         fi
+        conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
+        conda activate $BALSAM_CONDA_ENV
+        python -m pip install -r requirements.txt
         ;;
     ALCF)
         module load conda
-        MODULE=conda
+        conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
+        conda activate $BALSAM_CONDA_ENV
+        python -m pip install -r requirements.txt
         ;;
-    NERSC | OLCF)
+    NERSC)
         module load python
+        conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
+        conda activate $BALSAM_CONDA_ENV
+        python -m pip install -r requirements.txt
         MODULE=python
+        ;;
+    OLCF)
+        module load python
+        conda create --name $BALSAM_CONDA_ENV python=3.9 ipykernel -y
+        source activate $BALSAM_CONDA_ENV
+        python -m pip install -r requirements.txt
         ;;
     *)
         echo "Error: '$SITE' is not in the list"
         exit_abnormal
         ;;
 esac
-
-setup_general_env
 
 ## Setup Jupyter Kernel in JupyterHub
 if [[ "$SITE" == "NERSC" ]]
