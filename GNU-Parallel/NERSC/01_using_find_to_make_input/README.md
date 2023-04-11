@@ -19,9 +19,11 @@ The goal is to process each of these files with a parallel command, and to keep 
 based on the input filename while also writing them to the same location as the input.
 
 This begins with the find command found in build_then_use_task_list.sh:
+
     find $PWD -type f | grep txt | sort > tasks
  
 The find command will recursively report descendent files from the path it is given, in this case the content of the $PWD variable reports our working directory:
+
     elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input> echo $PWD
     /global/homes/e/elvis/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input
 
@@ -31,6 +33,7 @@ Careful the search string doesn't include any substrings from the path in $PWD.
 The remaining data files and their full path is sorted and placed in the "tasks" file.
 
 Next, the script loads the parallel module, and runs this parallel command:
+
     parallel "cat {} > {//}/{/.}.output" :::: tasks
 
 Note the command is in quotes; this is needed when the redirect character (>) is present.
