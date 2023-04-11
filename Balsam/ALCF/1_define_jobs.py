@@ -2,13 +2,13 @@ from balsam.api import Job
 import numpy as np
 
 n_gpus = 4
-site_name = "ALCF_tutorial"
+site_name = "polaris_tutorial"
 demo_path = "/home/csimpson/polaris/DOE-HPC-workflow-training/Balsam"
 application_env = demo_path+"/ALCF/lammps_envs.sh"
 input_file_path = demo_path+"/lj_lammps_template.in"
 
 #initial_temps = np.arange(0.72,2.16,0.12)
-lattices = np.arange(0.15,0.85,0.05)
+lattice_densities = np.arange(0.15,0.85,0.05)
 
 jobs = [Job(app_id="Lammps",
             site_name=site_name,
@@ -21,6 +21,6 @@ jobs = [Job(app_id="Lammps",
             launch_params={"cpu_bind":"depth"},
             tags={"parameter_test":"density"},
         )
-        for n,lat_scale in enumerate(lattices)]
+        for n,lat_scale in enumerate(lattice_densities)]
 
 jobs = Job.objects.bulk_create(jobs)

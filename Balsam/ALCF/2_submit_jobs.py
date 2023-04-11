@@ -1,6 +1,6 @@
 from balsam.api import BatchJob, Site
 
-site_name = "ALCF_tutorial"
+site_name = "polaris_tutorial"
 site = Site.objects.get(site_name)
 
 BatchJob.objects.create(
@@ -9,5 +9,5 @@ BatchJob.objects.create(
     wall_time_min=10,
     job_mode="mpi",
     project="WALSforAll",
-    queue="debug",
+    queue="R476170",
 )

@@ -1,3 +1,4 @@
 balsam
 numpy
 matplotlib
+scipy
