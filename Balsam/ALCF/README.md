@@ -4,14 +4,14 @@ This tutorial will show you how to setup a Balsam site and run simulations via B
 
 ## Installation
 
-To setup the tutorial environment run the following command on the site of your choice:
+To setup the tutorial environment run the following command in a shell on Polaris:
 ```bash
-source setup.sh --site [local, ALCF, NERSC or OLCF]
+source setup.sh --site ALCF
 ```
 
 ## Setup Balsam site
 
-In a terminal on Polaris, log into balsam and create your site:
+In a shell on Polaris, log into balsam and create your site:
 ```bash
 balsam login
 balsam site init -n polaris_tutorial polaris_tutorial
