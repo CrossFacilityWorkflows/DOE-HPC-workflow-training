@@ -8,6 +8,6 @@ BatchJob.objects.create(
     num_nodes=2,
     wall_time_min=10,
     job_mode="mpi",
-    project="dasrepo",
+    project="ntrain7",
     queue="debug",
 )
