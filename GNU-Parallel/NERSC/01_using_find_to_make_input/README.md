@@ -7,9 +7,9 @@ The data directory starts out with these contents:
 
     elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input/data> ls -lh
     total 1.5K
-    -rw-rw---- 1 warndt warndt 25 Mar 31 16:36 task_1.txt
-    -rw-rw---- 1 warndt warndt 25 Mar 31 16:36 task_two.txt
-    -rw-rw---- 1 warndt warndt 29 Mar 31 16:36 tsk-3.txt
+    -rw-rw---- 1 elvis elvis 25 Mar 31 16:36 task_1.txt
+    -rw-rw---- 1 elvis elvis 25 Mar 31 16:36 task_two.txt
+    -rw-rw---- 1 elvis elvis 29 Mar 31 16:36 tsk-3.txt
     elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input/data> cat *
     Input for task number 1.
     Input for task number 2.
@@ -48,12 +48,12 @@ See the expected state of the data directory after running build_then_use_task_l
 
     elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input/data> ls -lh
     total 3.0K
-    -rw-rw---- 1 warndt warndt 25 Mar 31 21:27 task_1.output
-    -rw-rw---- 1 warndt warndt 25 Mar 31 16:36 task_1.txt
-    -rw-rw---- 1 warndt warndt 25 Mar 31 21:27 task_two.output
-    -rw-rw---- 1 warndt warndt 25 Mar 31 16:36 task_two.txt
-    -rw-rw---- 1 warndt warndt 29 Mar 31 21:27 tsk-3.output
-    -rw-rw---- 1 warndt warndt 29 Mar 31 16:36 tsk-3.txt
+    -rw-rw---- 1 elvis elvis 25 Mar 31 21:27 task_1.output
+    -rw-rw---- 1 elvis elvis 25 Mar 31 16:36 task_1.txt
+    -rw-rw---- 1 elvis elvis 25 Mar 31 21:27 task_two.output
+    -rw-rw---- 1 elvis elvis 25 Mar 31 16:36 task_two.txt
+    -rw-rw---- 1 elvis elvis 29 Mar 31 21:27 tsk-3.output
+    -rw-rw---- 1 elvis elvis 29 Mar 31 16:36 tsk-3.txt
     elvis@perlmutter:login13:~/work_work/DOE-HPC-workflow-training/GNU-Parallel/NERSC/01_using_find_to_make_input/data> cat *
     Input for task number 1.
     Input for task number 1.
