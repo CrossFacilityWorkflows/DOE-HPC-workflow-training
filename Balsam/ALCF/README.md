@@ -17,9 +17,22 @@ balsam login
 balsam site init -n polaris_tutorial polaris_tutorial
 ```
 
-Now start the site:
+Go to the site:
 ```bash
 cd polaris_tutorial
+```
+
+Edit the `settings.yml`.  Under `allowed_queues` add the workshop queue:
+```bash
+    allowed_queues:
+        R476170:
+            max_nodes: 2
+            max_queued_jobs: 100
+            max_walltime: 60
+```
+
+Now start the site:
+```bash
 balsam site start
 cd ..
 ```
