@@ -5,7 +5,7 @@
 
 The example script can be run in this directory with the command:
 
-    providing_tasks.sh
+    ./providing_tasks.sh
 
 The expected output is available in the file expected_output.txt
 
@@ -32,14 +32,22 @@ In general, the reason to choose colon inputs instead of the others is additiona
 Additionally, a plus sign (+) can be appended to the colon notation to change the combination method to a dot product. Contrast these two examples:
 
 > ::: 1 2 ::: a b
+>
 > outcome:
+>
 > 1 a
+>
 > 1 b
+>
 > 2 a
+>
 > 2 b
 
 > :::+ 1 2 ::: a b
+>
 > outcome:
+>
 > 1 a
+>
 > 2 b
 
