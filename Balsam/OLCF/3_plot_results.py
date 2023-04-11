@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from balsam.api import Site,Job
 
-site_name = "polaris_tutorial"
+site_name = "summit_tutorial"
 site = Site.objects.get(site_name)
 
 finished_jobs = Job.objects.filter(state="JOB_FINISHED",site_id=site.id,tags={"parameter_test":"density"})

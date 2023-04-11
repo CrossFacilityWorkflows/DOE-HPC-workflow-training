@@ -1,11 +1,11 @@
 from balsam.api import Job
 import numpy as np
+import os
 
 n_gpus = 4
-site_name = "polaris_tutorial"
-demo_path = "/home/csimpson/polaris/DOE-HPC-workflow-training/Balsam"
-application_env = demo_path+"/ALCF/lammps_envs.sh"
-input_file_path = demo_path+"/lj_lammps_template.in"
+site_name = "summit_tutorial"
+demo_path = os.getcwd()
+input_file_path = os.path.join(demo_path,"lj_lammps_template.in")
 
 #initial_temps = np.arange(0.72,2.16,0.12)
 lattice_densities = np.arange(0.15,0.85,0.05)

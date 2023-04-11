@@ -1,6 +1,6 @@
 from balsam.api import BatchJob, Site
 
-site_name = "polaris_tutorial"
+site_name = "summit_tutorial"
 site = Site.objects.get(site_name)
 
 BatchJob.objects.create(

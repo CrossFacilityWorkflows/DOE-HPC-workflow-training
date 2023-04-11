@@ -1,7 +1,7 @@
 from balsam.api import ApplicationDefinition
 import os
 
-site_name = "polaris_tutorial"
+site_name = "summit_tutorial"
 demo_path = os.getcwd()
 application_env = os.path.join(demo_path,"lammps_envs.sh")
 
