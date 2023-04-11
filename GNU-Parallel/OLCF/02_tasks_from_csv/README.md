@@ -17,11 +17,16 @@ before the system copy; relative to all that effort, it's much  easier to use --
 comma character.
 
 [ketan2@login2.crusher 02_tasks_from_csv]$ cat input.csv 
+
 "Bob","18","Cherry"
+
 "Alice","9","Apple"
+
 "Bort","1","Pipevine"
 
+
 [ketan2@login2.crusher 02_tasks_from_csv]$ cat csv_parse.sh 
+
 #!/bin/bash
 
 module load parallel
@@ -29,7 +34,10 @@ module load parallel
 parallel --colsep="," echo {1} {3} :::: $1
 
 [ketan2@login2.crusher 02_tasks_from_csv]$ ./csv_parse.sh input.csv 
+
 "Bob" "Cherry"
+
 "Alice" "Apple"
+
 "Bort" "Pipevine"
 
