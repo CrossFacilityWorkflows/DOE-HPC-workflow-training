@@ -118,7 +118,9 @@ Things to note:
 - We have specified `singleshot` here, since each task within the workflow only needs to run once.
 - We have specified the usual Slurm job resources that each task will use.
   
-Now that we've examined all the pieces, let's run our FireWorks workflow.
+Now that we've examined all the pieces, let's run our FireWorks workflow. We are launching
+this workflow from a Perlmutter login node with our `fireworks` conda environment
+activated. 
 
 Note that we are launching the workflow with `qlaunch rapidfire`. Remember that we have
 specified `rlaunch singleshot` in our queue adapter- this will run each task once per job.
@@ -320,11 +322,14 @@ However in this example, we will have to launch our workflow using both queue ad
 file.
 
 To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands.
+We are launching
+this workflow from a Perlmutter login node with our `fireworks` conda environment
+activated.
 
 ```
 lpad reset
 lpad add fw_diabetes_wf.yaml
-qlaunch -q my_qadapter1.yaml rapidfure & qlaunch -q my_quadapter2.yaml rapidfire
+qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_quadapter2.yaml rapidfire
 ```
 
 If you like, you can open a second terimnal to monitor the job status with
