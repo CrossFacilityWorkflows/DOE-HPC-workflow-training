@@ -8,4 +8,4 @@ module load python
 source activate /gpfs/alpine/world-shared/stf001/tutorial10
 jupyter notebook --no-browser --port 9900
 ```
-The shell will generate a URL that looks like `http://localhost:9900/?token=xxxxx`.  Copy and paste it in a local browser.  Navigate to your copy of the workshop repository on the file system and open the notebook `0_molecular-design-with-parsl.ipynb`.
+The shell will generate a URL that looks like `http://localhost:9900/?token=xxxxx`.  Copy and paste it in a local browser.  Navigate to your copy of the workshop repository on the file system and open the notebook `mol-design-demo.ipynb`.
