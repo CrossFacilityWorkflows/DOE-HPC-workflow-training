@@ -1,8 +1,8 @@
 # 3d Lennard-Jones melt
 
-variable	x index 1
-variable	y index 1
-variable	z index 1
+variable	x index 4
+variable	y index 4
+variable	z index 4
 variable	tinit index 1.44
 variable	lat_scale index 0.8442
 

@@ -1,5 +1,14 @@
 # Balsam on Perlmutter
 
+This tutorial will show you how to setup a Balsam site and run simulations via Balsam on Perlmutter. For this tutorial we are using the application `LAMMPS`, a large scale classical molecular dynamics code that stands for Large-scale Atomic/Molecular Massively Parallel Simulator. 
+
+## Installation
+
+To setup the tutorial environment run the following command in a shell on Perlmutter:
+```bash
+source setup.sh --site NERSC
+```
+
 ## Setup Balsam site
 
 In a terminal on Perlmutter, log into balsam and create your site:

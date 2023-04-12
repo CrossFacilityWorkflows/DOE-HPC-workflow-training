@@ -2,7 +2,17 @@
 
 ## Installation
 
-TBD
+You will need to work out of a directory to which Summit's compute nodes can read and write (for example, within $PROJWORK but not $HOME). For more information, see this page. Here, we use $DEMO_DIR as a convention.
+
+```bash
+$ export DEMO_DIR="${PROJWORK}/stf019/balsam-demo" # Note: change project ID
+$ module load gcc
+$ module load python
+$ conda create -p ${DEMO_DIR}/conda-stuff-balsam
+$ source activate ${DEMO_DIR}/conda-stuff-balsam
+$ pip install --pre balsam
+$ pip install numpy scipy matplotlib jupyterlab jupyterlab_spellchecker
+```
 
 ## Setup Balsam site
 

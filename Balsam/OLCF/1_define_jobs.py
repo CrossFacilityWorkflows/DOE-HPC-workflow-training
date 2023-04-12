@@ -2,7 +2,9 @@ from balsam.api import Job
 import numpy as np
 import os
 
-n_gpus = 4
+# A Summit node has 6 GPUs
+n_gpus = 6
+
 site_name = "summit_tutorial"
 demo_path = os.getcwd()
 input_file_path = os.path.join(demo_path,"lj_lammps_template.in")

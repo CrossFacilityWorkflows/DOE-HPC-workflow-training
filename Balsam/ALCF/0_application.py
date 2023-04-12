@@ -12,9 +12,7 @@ class Lammps(ApplicationDefinition):
     def shell_preamble(self):
         return f'source {application_env}'
 
-
     command_template = 'lmp -in {{input_file_path}} -k on g {{NGPUS}} -var tinit {{tinit}} -var lat_scale {{lat_scale}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
-    
         
     def postprocess(self):
         print("starting postprocess")
@@ -24,13 +22,13 @@ class Lammps(ApplicationDefinition):
                     pass
                 line_entries = line.split()
                 if line_entries[0] == "1000":
-                    self.job.data = {"tfinal":float(line_entries[3]), "efinal":float(line_entries[1])+float(line_entries[2]), "Pfinal":float(line_entries[4])}
+                    self.job.data = {"tfinal":float(line_entries[3]), 
+                                     "efinal":float(line_entries[1])+float(line_entries[2]), 
+                                     "Pfinal":float(line_entries[4])}
                     self.job.state = "POSTPROCESSED"
                 else:
                     self.job.state = "FAILED"
-                    self.job.state_data = {"reason": "Final step not reached"}
-        except Exception as e:
-            self.job.state = "FAILED"
-            self.job.state_data = {"reason": str(e)}        
+        except:
+            self.job.state = "FAILED"   
 
 Lammps.sync()

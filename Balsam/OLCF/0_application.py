@@ -10,12 +10,14 @@ class Lammps(ApplicationDefinition):
     site = site_name
             
     def shell_preamble(self):
-        return f'source {application_env}'
+        return 'source '+application_env
 
-
+    # With gpus and kokkos
     command_template = 'lmp -in {{input_file_path}} -k on g {{NGPUS}} -var tinit {{tinit}} -var lat_scale {{lat_scale}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
-    
-        
+
+    # With cpus and no kokkos
+    # command_template = 'lmp -in {{input_file_path}} -var tinit {{tinit}} -var lat_scale {{lat_scale}}'
+
     def postprocess(self):
         print("starting postprocess")
         try:
@@ -28,9 +30,7 @@ class Lammps(ApplicationDefinition):
                     self.job.state = "POSTPROCESSED"
                 else:
                     self.job.state = "FAILED"
-                    self.job.state_data = {"reason": "Final step not reached"}
-        except Exception as e:
-            self.job.state = "FAILED"
-            self.job.state_data = {"reason": str(e)}        
+        except:
+            self.job.state = "FAILED"     
 
 Lammps.sync()

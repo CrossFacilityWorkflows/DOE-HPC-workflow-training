@@ -4,7 +4,12 @@ This tutorial will show you how to setup a Balsam site and run simulations via B
 
 ## Installation
 
-To setup the tutorial environment run the following command in a shell on Polaris:
+If you are running this tutorial during the workshop, you can load the conda environment for the tutorial from a shell on Polaris:
+```bash
+module load conda
+conda activate /grand/projects/WALSforAll/conda_environments/balsam
+```
+Alternatively, you can build your own environment by running the `setup.sh` script:
 ```bash
 source setup.sh --site ALCF
 ```
