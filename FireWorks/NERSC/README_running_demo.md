@@ -127,12 +127,17 @@ Note that we will launch the workflow with `qlaunch rapidfire`. Remember that we
 specified `rlaunch singleshot` in our queue adapter- this will run each task once per job.
 However we need to launch 3 jobs, one for each task. For this reason we use `qlaunch rapidfire`
 to automatically launch our whole workflow. `rapidfile` will keep launching jobs until
-there are no more pending FireWorks in the database.
+there are no more pending FireWorks in the database. 
+
+We add the `-m 2` flag to limit the number
+of jobs FireWorks has submitted to the queue to 2. This restriction may not be necessary
+depending on the type of account used (normal vs training account) and the type of queue
+used (regular vs debug). 
 
 ```
 lpad reset
 lpad add fw_diabetes_ht.yaml
-qlaunch rapidfire
+qlaunch rapidfire -m 2
 ```
 
 ```
@@ -336,10 +341,15 @@ We are launching
 this workflow from a Perlmutter login node with our `fireworks` conda environment
 activated.
 
+We add the `-m 1` flag to limit the number
+of jobs each queue adapter will submit. This restriction may not be necessary
+depending on the type of account used (normal vs training account) and the type of queue
+used (normal vs debug).
+
 ```
 lpad reset
 lpad add fw_diabetes_wf.yaml
-qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_qadapter2.yaml rapidfire
+qlaunch -q my_qadapter1.yaml rapidfire -m 1 & qlaunch -q my_qadapter2.yaml rapidfire -m 1
 ```
 
 If you like, you can open a second terminal to monitor the job status with
