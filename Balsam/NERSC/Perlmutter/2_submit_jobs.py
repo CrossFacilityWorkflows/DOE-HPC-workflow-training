@@ -9,5 +9,6 @@ BatchJob.objects.create(
     wall_time_min=10,
     job_mode="mpi",
     project="ntrain7",
-    queue="doe_workflows_2023_gpu",
+    reservation="doe_workflows_2023_gpu",
+    queue="regular"
 )
