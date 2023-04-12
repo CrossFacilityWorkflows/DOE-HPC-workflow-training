@@ -33,7 +33,7 @@ risk factor for the progression of diabetes.
 
 In this version of the demo, steps 1, 2, and 3 will all use the 
 same amount of resources (2 CPU nodes). FireWorks is a bit more
-natually suited to this kind of workflow and requires less configuration
+naturally suited to this kind of workflow and requires less configuration
 so we'll start here. 
 
 Let's start by looking at our high-throughput FireWork:
@@ -93,7 +93,7 @@ query: '{}'
 ```
 
 Next, let's look at our `my_qadapter.yaml`. On ALCF Polaris we use a PBS adapter- on other systems, you can
-substitue the [appropriate adapter](https://github.com/materialsproject/fireworks/tree/bd2bb5078122fa27a7dda2084abb3af8cac05436/fw_tutorials/queue).
+substitute the [appropriate adapter](https://github.com/materialsproject/fireworks/tree/bd2bb5078122fa27a7dda2084abb3af8cac05436/fw_tutorials/queue).
 
 Note that Polaris-specific changes to the PBS adapter haven't been
 [merged](https://github.com/materialsproject/fireworks/pull/498) upstream, so for now
@@ -109,7 +109,8 @@ The modification you need to make is to add the `filesystems` PBS queue option i
 #PBS -l filesystems=$${filesystems}
 ```
 
-Save your changes and exit.
+Save your changes and exit. We also provide a sample `PBS_template.txt` file in
+this repo.
 
 Now that your PBS template is ready, let's take a look at our `my_qadapter.yaml`. Note you'll need
 to change the paths to reflect your own setup.
@@ -132,13 +133,14 @@ post_rocket: null
 ```
 
 Things to note:
-- We unfortuatnely have to specify the full paths
+- We unfortunately have to specify the full paths
   to `my_launchpad.yaml` and `my_fworker2.yaml`- bash shortcuts
   are not supported.
 - We have specified `singleshot` here, since each task within the workflow only needs to run once.
 - We have specified the usual Slurm job resources that each task will use.
 - Since PBS does not inherit the environment which we used to launch the job,
-  we'll need to load our custom conda environment before each job runs.  
+  we'll need to load our custom conda environment before each job runs. 
+- Note you'll need to change the file paths and your PBS account information.
 
 Now that we've examined all the pieces, let's run our FireWorks workflow.
 
@@ -329,22 +331,24 @@ pre_rocket: module load conda; conda activate fireworks
 post_rocket: null
 ```
 
+Note you'll need to change these files to include your file
+paths and ALCF account information.
+
 We are ready to launch our heterogeneous workflow example. 
 
 Recall that in our first example we did a
-simple `qlaunch rapidfire -m 1`. We did not specify a specific queue adapter here. If we do not
-specify a specific queue adpater, FireWorks will chose the default file, `my_qadapter.yaml`.
+simple `qlaunch rapidfire -m 1`. We did not specify a specific queue adapter. If we do not
+specify a specific queue adapter, FireWorks will chose the default file, `my_qadapter.yaml`.
 
 However in this example, we will have to launch our workflow using both queue adapters
 `my_qadapter1.yaml` and `my_qadapter2.yaml`. Note that we specify the corresponding
-`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adpater
+`my_fworker1.yaml` and `my_fworker2.yaml`, respectively, in each queue adapter
 file.
 
 To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands. Note
 we are issuing these commands from a Polaris login node with our `fireworks` conda
 environment activated.
 
-To launch our workflow, we'll issue two simultaneous `qlaunch rapidfire` commands.
 
 ```
 lpad reset
@@ -355,7 +359,7 @@ qlaunch -q my_qadapter1.yaml rapidfire -m 1 & qlaunch -q my_qadapter2.yaml rapid
 Note we are limiting the number of jobs we allow FireWorks to submit due to the
 [Polaris queue policies](https://docs.alcf.anl.gov/polaris/running-jobs/).
 
-If you like, you can open a second terimnal to monitor the job status with
+If you like, you can open a second terminal to monitor the job status with
 ```
 lpad get_fws
 ```
