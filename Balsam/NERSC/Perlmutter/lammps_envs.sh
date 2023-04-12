@@ -1,14 +1,5 @@
 #!/bin/bash
 
-if command -v conda &> /dev/null
-then
-    echo "deactivating conda env"
-    conda deactivate
-fi
-
-module load python
-module load gsl
-module load cray-hdf5-parallel
-module load cray-fftw
+for ENVS in $(env | grep CONDA | cut -d'=' -f1); do echo $ENVS; unset $ENVS; done;
 module load lammps
 
