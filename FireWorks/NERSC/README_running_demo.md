@@ -333,7 +333,7 @@ activated.
 ```
 lpad reset
 lpad add fw_diabetes_wf.yaml
-qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_quadapter2.yaml rapidfire
+qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_qadapter2.yaml rapidfire
 ```
 
 If you like, you can open a second terminal to monitor the job status with
