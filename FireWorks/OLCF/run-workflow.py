@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 #-  run-workflow.py ~~
 #
@@ -18,3 +18,5 @@ launchpad = LaunchPad(host = os.getenv("MONGODB_URI"), uri_mode = True)
 print("Looking for workflows ...")
 rapidfire(launchpad)
 print("Done.")
+
+#-  vim:set syntax=python:
