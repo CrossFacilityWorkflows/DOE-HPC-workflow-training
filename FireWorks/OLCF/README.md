@@ -25,7 +25,7 @@ $ oc get service mongo
 NAME    TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)           AGE
 mongo   NodePort   172.25.233.185   <none>        27017:32093/TCP   13s
 ```
-The important number in the above example is 32093. You will need it as the port number to construct a MongoDB URI:
+The important number in the above example is 32093, but the number is always different because it is automatically assigned. You will need it as the port number to construct a MongoDB URI:
 ```
 mongodb://admin:password@apps.marble.ccs.ornl.gov:32093/test?authSource=admin
 ```
