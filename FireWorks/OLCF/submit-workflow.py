@@ -2,7 +2,7 @@
 #
 #-  submit-workflow.py ~~
 #
-#-  Run this workflow on a Summit login node from the demo directory like this:
+#-  Run this script on a Summit login node from the demo directory like this:
 #       $ source setup-summit.bash
 #       $ python3 submit-workflow.py
 #
