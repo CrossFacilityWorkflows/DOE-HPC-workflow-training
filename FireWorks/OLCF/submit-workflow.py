@@ -1,6 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 #-  submit-workflow.py ~~
+#
+#-  Run this workflow on a Summit login node from the demo directory like this:
+#       $ source setup-summit.bash
+#       $ python3 submit-workflow.py
 #
 
 import os
@@ -12,11 +16,13 @@ from fireworks.core.rocket_launcher import rapidfire
 launchpad = LaunchPad(host = os.getenv("MONGODB_URI"), uri_mode = True)
 launchpad.reset("", require_password=False)
 
-# Save project directory. Note the use of ${PROJWORK} -- this prevents problems
-# that arise because ${HOME} is not available on Summit's compute nodes.
+# Specify the demo directory via environment variable explicitly. Even though
+# this program is running on a login node from the demo directory, the 
+# individual Python scripts will execute elsewhere.
 demo_dir = os.getenv("DEMO_DIR")
 
-# Create the individual FireWorks and Workflow.
+# Create the individual FireWorks and Workflow. The `jsrun` will run on a
+# batch node, and the Python scripts will execute on compute nodes.
 fw1 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_1_diabetes_preprocessing.py")),
             name = "step-1")
@@ -34,3 +40,4 @@ wf = Workflow([fw1, fw2, fw3], {fw1: fw2, fw2: fw3}, name = "Fireworks demo")
 launchpad.add_wf(wf)
 print("Workflow submitted.")
 
+#-  vim:set syntax=python:
