@@ -6,7 +6,7 @@ You will need to work out of a directory to which Summit's compute nodes can rea
 
 ## Building your custom FireWorks environment
 
-We'll use a custom Conda environment to install Fireworks. We're also installing packages that we'll use in our demo. 
+We will use a custom Conda environment to install Fireworks along with packages that we will need for our demo.
 ```bash
 $ export DEMO_DIR="${PROJWORK}/stf019/fireworks-demo" # Note: change project ID
 $ module load gcc
