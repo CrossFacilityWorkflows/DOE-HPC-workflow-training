@@ -14,6 +14,6 @@ source activate ${DEMO_DIR}/conda-stuff
 
 # Export MongoDB connection string as environment variable to be imported into
 # Python programs.
-export MONGODB_URI="mongodb://admin:password@apps.marble.ccs.ornl.gov:30068/test?authSource=admin"
+export MONGODB_URI="mongodb://admin:password@apps.marble.ccs.ornl.gov:32093/test?authSource=admin"
 
 #-  vim:set syntax=sh:
