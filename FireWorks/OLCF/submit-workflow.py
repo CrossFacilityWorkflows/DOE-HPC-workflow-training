@@ -25,7 +25,7 @@ demo_dir = os.getenv("DEMO_DIR")
 # batch node, and the Python scripts will execute on compute nodes.
 fw1 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_1_diabetes_preprocessing.py")),
-            name = "step-1")
+            name = "Step-1")
 fw2 = Firework(ScriptTask.from_str("jsrun -n 10 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_2_diabetes_correlation.py")),
             name = "Step-2")
