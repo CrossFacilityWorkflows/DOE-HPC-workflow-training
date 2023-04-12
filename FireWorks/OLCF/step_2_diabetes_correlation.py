@@ -55,4 +55,4 @@ if rank == 0:
     np.save(os.path.join(demo_dir, "all_coeffs.npy"), all_coeffs)
     print("wrote all_coeffs file")
 
-vim:set syntax=python:
+#-  vim:set syntax=python:
