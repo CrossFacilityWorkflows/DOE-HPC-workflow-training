@@ -32,7 +32,7 @@ fw2 = Firework(ScriptTask.from_str("jsrun -n 10 -a 1 -c 1 python3 " +
 fw3 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_3_diabetes_postprocessing.py")),
             name = "Step-3")
-wf = Workflow([fw1, fw2, fw3], {fw1: fw2, fw2: fw3}, name = "Fireworks demo")
+wf = Workflow([fw1, fw2, fw3], {fw1: fw2, fw2: fw3}, name = "FireWorks demo")
 
 # Store workflow
 launchpad.add_wf(wf)
