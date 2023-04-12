@@ -17,7 +17,6 @@ from fireworks.core.rocket_launcher import rapidfire
 launchpad = LaunchPad(host = os.getenv("MONGODB_URI"), uri_mode = True)
 
 # Launch workflow "locally" -- this will run on a Summit batch node.
-print("Looking for workflows ...")
 rapidfire(launchpad)
 print("Done.")
 
