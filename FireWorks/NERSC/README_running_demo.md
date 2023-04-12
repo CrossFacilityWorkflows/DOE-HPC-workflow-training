@@ -123,11 +123,17 @@ Now that we've examined all the pieces, let's run our FireWorks workflow. We are
 this workflow from a Perlmutter login node with our `fireworks` conda environment
 activated. 
 
-Note that we are launching the workflow with `qlaunch rapidfire`. Remember that we have
+Note that we will launch the workflow with `qlaunch rapidfire`. Remember that we have
 specified `rlaunch singleshot` in our queue adapter- this will run each task once per job.
 However we need to launch 3 jobs, one for each task. For this reason we use `qlaunch rapidfire`
 to automatically launch our whole workflow. `rapidfile` will keep launching jobs until
 there are no more pending FireWorks in the database.
+
+```
+lpad reset
+lpad add fw_diabetes_ht.yaml
+qlaunch rapidfire
+```
 
 ```
 (fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> qlaunch rapidfire
