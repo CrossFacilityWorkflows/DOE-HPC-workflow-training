@@ -26,11 +26,9 @@ demo_dir = os.getenv("DEMO_DIR")
 fw1 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_1_diabetes_preprocessing.py")),
             name = "step-1")
-
 fw2 = Firework(ScriptTask.from_str("jsrun -n 10 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_2_diabetes_correlation.py")),
             name = "Step-2")
-
 fw3 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_3_diabetes_postprocessing.py")),
             name = "Step-3")
