@@ -38,3 +38,22 @@ $ export MONGODB_URI="mongodb://admin:password@apps.marble.ccs.ornl.gov:32093/te
 ```
 
 That variable will then be used by the Python programs to connect to the MongoDB database.
+
+## Running the demonstration
+
+To run this demonstration from the demo directory on a login node is very simple. First, ensure that you have exported your environment variables and activated your Conda environment in the current shell session:
+```bash
+$ source setup-summit.bash
+```
+
+Next, submit the workflow to MongoDB from a login node:
+```bash
+$ python3 submit-workflow.py
+```
+
+Finally, submit an LSF batch job to Summit's batch queue which will execute the workflow's steps on a Summit compute node:
+```base
+$ bsub batch-runner.lsf
+```
+
+The numbers that print to stdout should match what was shown in the [NERSC example](https://github.com/CrossFacilityWorkflows/DOE-HPC-workflow-training/blob/olcf-fireworks/FireWorks/NERSC/README_running_demo.md), which used the FireWorks CLI.
