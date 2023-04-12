@@ -5,7 +5,7 @@ To open the tutorial notebook on Summit, you will need to create an ssh tunnel. 
 ```
 ssh -L 9900:localhost:9900 tskluzac@summit.olcf.ornl.gov
 module load python
-source activate /gpfs/alpine/world-shared/stf001/tutorial10
+source activate /gpfs/alpine/world-shared/stf001/parsl_demo
 jupyter notebook --no-browser --port 9900
 ```
 The shell will generate a URL that looks like `http://localhost:9900/?token=xxxxx`.  Copy and paste it in a local browser.  Navigate to your copy of the workshop repository on the file system and open the notebook `mol-design-demo.ipynb`.
