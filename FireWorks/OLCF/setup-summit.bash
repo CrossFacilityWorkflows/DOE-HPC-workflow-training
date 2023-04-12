@@ -1,25 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-#-  summit-setup.bash ~~
+#-  setup-summit.bash ~~
+#
+#   Usage:
+#     $ source setup-summit.bash
 #
 
-# Conda environment creation and installation (commented out but good to know
-# later what you did!)
+# Change next line to match your demo directory.
+export DEMO_DIR=${PROJWORK}/stf019/fireworks-demo
 
-export DEMO_DIR=${PROJWORK}/stf019/test-fireworks
-
-#module load gcc
-#module load python
-#conda create -p ${DEMO_DIR}/conda-stuff
+# Activate Conda environment using recommended way for Summit.
 source activate ${DEMO_DIR}/conda-stuff
-#conda install -c conda-forge \
-#   fireworks numpy pandas pytest scikit-learn
-#MPICC="mpicc -shared" pip install --no-cache-dir --no-binary=mpi4py mpi4py
 
 # Export MongoDB connection string as environment variable to be imported into
 # Python programs.
-export MONGODB_URI="mongodb://admin:password@apps.marble.ccs.ornl.gov:30068/test?authSource=admin"
-
-#-  vim:set syntax=sh:
+export MONGODB_URI="mongodb://admin:password@apps.marble.ccs.ornl.gov:32093/test?authSource=admin"
 
 #-  vim:set syntax=sh:

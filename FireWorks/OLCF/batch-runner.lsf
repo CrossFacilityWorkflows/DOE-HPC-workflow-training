@@ -6,8 +6,11 @@
 #BSUB -o batch-runner.o%J
 #BSUB -e batch-runner.e%J
 
-DEMO_DIR=${PROJWORK}/stf019/test-fireworks/
+# Change the next line to match your demo directory.
+DEMO_DIR=${PROJWORK}/stf019/fireworks-demo
 
 source ${DEMO_DIR}/setup-summit.bash
 
 python3 ${DEMO_DIR}/run-workflow.py
+
+#- vim:set syntax=sh:

@@ -1,0 +1,6 @@
+balsam
+numpy
+matplotlib
+scipy
+jupyterlab
+jupyterlab_spellchecker

@@ -1,15 +1,13 @@
-#!/usr/bin/python3
-
-"""
-diabetes postprocessing
-"""
+#!/usr/bin/env python3
+#
+#-  step_3_diabetes_postprocessing.py ~~
+#
 
 import os
 import numpy as np
 import pandas as pd
 
-# Save project directory. Note the use of ${PROJWORK} -- this prevents problems
-# that arise because ${HOME} is not available on Summit's compute nodes.
+# Obtain demo directory path from environment variable.
 demo_dir = os.getenv("DEMO_DIR")
 
 all_coeffs = np.load(os.path.join(demo_dir, "all_coeffs.npy"))
@@ -17,8 +15,7 @@ all_coeffs = np.load(os.path.join(demo_dir, "all_coeffs.npy"))
 np.set_printoptions(precision=3)
 print(all_coeffs)
 
-#put results into dict with attribute as key
-
+# Put results into dict with attribute as key.
 results = dict()
 results["age"] = [all_coeffs[0]]
 results["sex"] = [all_coeffs[1]]
@@ -33,7 +30,8 @@ results["blood_sugar_level"] = [all_coeffs[9]]
 
 df = pd.DataFrame.from_dict(results)
 
-# print to terminal
-
-print("pearson correlation coefficients for each attribute")
+# Print to terminal.
+print("Pearson correlation coefficients for each attribute")
 print(df.transpose().head(10))
+
+#-  vim:set syntax=python:
