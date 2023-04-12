@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 #-  step_2_diabetes_correlation.py ~~
 #
