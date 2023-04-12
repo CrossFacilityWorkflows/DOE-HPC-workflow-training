@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-#-  summit-setup.bash ~~
+#-  setup-summit.bash ~~
+#
+#   Usage:
+#     $ source setup-summit.bash
 #
 
 # Change next line to match your demo directory.
