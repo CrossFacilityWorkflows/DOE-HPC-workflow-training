@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 #-  submit-workflow.py ~~
 #
@@ -39,3 +39,5 @@ wf = Workflow([fw1, fw2, fw3], {fw1: fw2, fw2: fw3}, name = "Fireworks demo")
 # Store workflow
 launchpad.add_wf(wf)
 print("Workflow submitted.")
+
+#-  vim:set syntax=python:
