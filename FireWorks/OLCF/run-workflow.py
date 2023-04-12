@@ -2,8 +2,10 @@
 #
 #-  run-workflow.py ~~
 #
-#-  Do not run this script manually, because it will fail when run on a login
-#   node. Instead, this script will be run by the LSF batch script:
+#-  Do not run this script manually for this demo. This script can run on a
+#   login node, but the demo will fail on the second step of the workflow
+#   because of MPI. Instead, this demo runs this script for you as part of
+#   LSF batch script:
 #       $ bsub batch-runner.lsf
 #
 
