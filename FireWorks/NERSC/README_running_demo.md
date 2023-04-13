@@ -102,9 +102,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml singleshot
 constraint: cpu
 nodes: 2
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
@@ -133,6 +133,17 @@ We add the `-m 2` flag to limit the number
 of jobs FireWorks has submitted to the queue to 2. This restriction may not be necessary
 depending on the type of account used (normal vs training account) and the type of queue
 used (regular vs debug). 
+
+### Tip submitted from user
+
+A summary of all the changes needed for a user to run this example:
+
+```
+  245  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter.yaml
+  246  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter1.yaml
+  247  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter2.yaml
+  248  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' fw_diabetes_wf.yaml
+```
 
 ```
 lpad reset
@@ -300,9 +311,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker1.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
 constraint: cpu
 nodes: 1
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
@@ -313,9 +324,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
 constraint: cpu
 nodes: 2  
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
