@@ -2,15 +2,13 @@
 #
 #-  submit-workflow.py ~~
 #
-#-  Run this workflow on a Summit login node from the demo directory like this:
+#-  Run this script on a Summit login node from the demo directory like this:
 #       $ source setup-summit.bash
 #       $ python3 submit-workflow.py
 #
 
 import os
-
 from fireworks import Firework, LaunchPad, ScriptTask, Workflow
-from fireworks.core.rocket_launcher import rapidfire
 
 # Set up and reset the LaunchPad using MongoDB URI string.
 launchpad = LaunchPad(host = os.getenv("MONGODB_URI"), uri_mode = True)
@@ -25,7 +23,7 @@ demo_dir = os.getenv("DEMO_DIR")
 # batch node, and the Python scripts will execute on compute nodes.
 fw1 = Firework(ScriptTask.from_str("jsrun -n 1 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_1_diabetes_preprocessing.py")),
-            name = "step-1")
+            name = "Step-1")
 fw2 = Firework(ScriptTask.from_str("jsrun -n 10 -a 1 -c 1 python3 " +
         os.path.join(demo_dir, "step_2_diabetes_correlation.py")),
             name = "Step-2")

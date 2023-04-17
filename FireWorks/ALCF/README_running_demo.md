@@ -154,6 +154,12 @@ Note
 we are issuing these commands from a Polaris login node with our `fireworks` conda
 environment activated.
 
+```
+lpad reset
+lpad add fw_diabetes_ht.yaml
+qlaunch rapidfire -m 1
+```
+
 Due to [queue restrictions](https://docs.alcf.anl.gov/polaris/running-jobs/)
 on Polaris, we will use `qlaunch rapidfire -m 1` to launch one job at a time
 since we are using the `debug-scaling` queue. Other queues may not need this

@@ -5,6 +5,7 @@ Balsam exercises at ALCF, NERSC, and OLCF.
 
 This tutorial will show you how to setup a Balsam site and run simulations via Balsam. For this tutorial we are using the application `LAMMPS`, a large scale classical molecular dynamics code that stands for Large-scale Atomic/Molecular Massively Parallel Simulator. 
 
+To run this tutorial, you will need an ALCF account to log into the Balsam server.
 
 ## Installation
 
@@ -15,7 +16,7 @@ source setup.sh --site [local, ALCF, NERSC or OLCF]
 
 ## Setup Balsam site
 
-In terminal log into balsam and create your site in a folder of your choosing:
+In a terminal, log into balsam and create your site in a folder of your choosing.  This is the step where you will need to use your ALCF account credentials: 
 ```bash
 balsam login
 balsam site init -n <doe-site>_tutorial <doe-site>_tutorial

@@ -12,7 +12,7 @@ class Lammps(ApplicationDefinition):
     def shell_preamble(self):
         return f'source {application_env}'
 
-    command_template = 'lmp -in {{input_file_path}} -k on g {{NGPUS}} -var tinit {{tinit}} -var lat_scale {{lat_scale_den}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
+    command_template = 'lmp -in {{input_file_path}} -k on g {{NGPUS}} -var tinit {{tinit}} -var lat_scale {{lat_scale}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
     
     def postprocess(self):
         try:
