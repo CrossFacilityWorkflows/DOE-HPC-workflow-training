@@ -5,7 +5,7 @@ import os
 # There are 4 GPUS on a Perlmutter node
 n_gpus = 4
 
-site_name = "perlmutter_tutorial"
+site_name = "nersc_tutorial"
 demo_path = os.getcwd()
 input_file_path = os.path.join(demo_path,"lj_lammps_template.in")
 

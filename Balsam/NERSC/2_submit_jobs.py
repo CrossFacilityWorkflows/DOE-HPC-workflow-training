@@ -1,6 +1,10 @@
 from balsam.api import BatchJob, Site
+import sys
 
-site_name = "perlmutter_tutorial"
+if len(sys.argv) < 2:
+    raise TypeError(f"{sys.argv[0]} requires: account at command line")
+
+site_name = "nersc_tutorial"
 site = Site.objects.get(site_name)
 
 BatchJob.objects.create(
@@ -8,7 +12,6 @@ BatchJob.objects.create(
     num_nodes=2,
     wall_time_min=10,
     job_mode="mpi",
-    project="ntrain7",
+    project=str(sys.argv[1]),
     queue="regular",
-    optional_params={"reservation": "doe_workflows_2023_gpu"}
 )

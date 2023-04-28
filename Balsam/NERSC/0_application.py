@@ -1,8 +1,8 @@
 from balsam.api import ApplicationDefinition
 import os
 
-site_name = "cori_tutorial"
-demo_path = os.getcwd() 
+site_name = "nersc_tutorial"
+demo_path = os.getcwd()
 application_env = os.path.join(demo_path,"lammps_envs.sh")
 
 class Lammps(ApplicationDefinition):
@@ -12,10 +12,9 @@ class Lammps(ApplicationDefinition):
     def shell_preamble(self):
         return f'source {application_env}'
 
-    command_template = 'lmp -in {{input_file_path}} -var tinit {{tinit}} -var lat_scale {{lat_scale}}'
-        
+    command_template = 'lmp -in {{input_file_path}} -k on g {{NGPUS}} -var tinit {{tinit}} -var lat_scale {{lat_scale}} -sf kk -pk kokkos neigh half neigh/qeq full newton on'
+    
     def postprocess(self):
-        print("starting postprocess")
         try:
             with open("energy.dat","r") as f:
                 for line in f:
