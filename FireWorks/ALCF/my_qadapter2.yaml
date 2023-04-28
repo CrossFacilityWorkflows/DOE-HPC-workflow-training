@@ -1,0 +1,13 @@
+_fw_name: CommonAdapter
+_fw_q_type: PBS
+rocket_launch: rlaunch -l /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_launchpad.yaml -w /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/my_fworker2.yaml singleshot
+nnodes: 2
+ppnode: 1
+walltime: '00:05:00'
+queue: preemptable
+account: WALSforAll
+filesystems: home:eagle
+job_name: null
+logdir: /home/stephey/DOE-HPC-workflow-training/FireWorks/ALCF/
+pre_rocket: module load conda; conda activate fireworks
+post_rocket: null

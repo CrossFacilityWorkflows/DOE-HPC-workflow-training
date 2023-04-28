@@ -17,9 +17,22 @@ balsam login
 balsam site init -n perlmutter_tutorial perlmutter_tutorial
 ```
 
-Now start the site:
+Go to the site:
 ```bash
 cd perlmutter_tutorial
+```
+
+Edit the `settings.yml`.  Under `allowed_queues` add the workshop queue:
+```bash
+    allowed_queues:
+        doe_workflows_2023_gpu:
+            max_nodes: 2
+            max_queued_jobs: 100
+            max_walltime: 60
+```
+
+Now start the site:
+```bash
 balsam site start
 cd ..
 ```
