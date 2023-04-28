@@ -14,12 +14,12 @@ source setup.sh --site NERSC
 In a terminal on Perlmutter, log into balsam and create your site:
 ```bash
 balsam login
-balsam site init -n perlmutter_tutorial perlmutter_tutorial
+balsam site init -n nersc_tutorial nersc_tutorial
 ```
 
 Go to the site:
 ```bash
-cd perlmutter_tutorial
+cd nersc_tutorial
 ```
 
 Now start the site:
@@ -39,7 +39,7 @@ To execute the scripts, run them in order as we progress:
 ```python 
 python 0_application.py
 python 1_define_jobs.py
-python 2_submit_jobs.py
+python 2_submit_jobs.py <account>
 python 3_plot_results.py
 ```
 
