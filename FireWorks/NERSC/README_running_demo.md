@@ -102,9 +102,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml singleshot
 constraint: cpu
 nodes: 2
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
@@ -123,11 +123,33 @@ Now that we've examined all the pieces, let's run our FireWorks workflow. We are
 this workflow from a Perlmutter login node with our `fireworks` conda environment
 activated. 
 
-Note that we are launching the workflow with `qlaunch rapidfire`. Remember that we have
+Note that we will launch the workflow with `qlaunch rapidfire`. Remember that we have
 specified `rlaunch singleshot` in our queue adapter- this will run each task once per job.
 However we need to launch 3 jobs, one for each task. For this reason we use `qlaunch rapidfire`
 to automatically launch our whole workflow. `rapidfile` will keep launching jobs until
-there are no more pending FireWorks in the database.
+there are no more pending FireWorks in the database. 
+
+We add the `-m 2` flag to limit the number
+of jobs FireWorks has submitted to the queue to 2. This restriction may not be necessary
+depending on the type of account used (normal vs training account) and the type of queue
+used (regular vs debug). 
+
+### Tip submitted from user
+
+A summary of all the changes needed for a user to run this example:
+
+```
+  245  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter.yaml
+  246  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter1.yaml
+  247  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' my_qadapter2.yaml
+  248  sed -i 's#/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC#/global/homes/h/hschwand/DOE-HPC-workflow-training.git/FireWorks/NERSC#g' fw_diabetes_wf.yaml
+```
+
+```
+lpad reset
+lpad add fw_diabetes_ht.yaml
+qlaunch rapidfire -m 2
+```
 
 ```
 (fireworks)stephey@perlmutter:login03:/pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC> qlaunch rapidfire
@@ -289,9 +311,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker1.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
 constraint: cpu
 nodes: 1
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
@@ -302,9 +324,9 @@ _fw_q_type: SLURM
 rocket_launch: rlaunch -w /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_fworker2.yaml -l /pscratch/sd/s/stephey/DOE-HPC-workflow-training/FireWorks/NERSC/my_launchpad.yaml singleshot
 constraint: cpu
 nodes: 2  
-account: nstaff
+account: ntrain7
 walltime: '00:05:00'
-queue: debug
+queue: regular
 job_name: null
 logdir: null
 pre_rocket: null
@@ -330,10 +352,15 @@ We are launching
 this workflow from a Perlmutter login node with our `fireworks` conda environment
 activated.
 
+We add the `-m 1` flag to limit the number
+of jobs each queue adapter will submit. This restriction may not be necessary
+depending on the type of account used (normal vs training account) and the type of queue
+used (normal vs debug).
+
 ```
 lpad reset
 lpad add fw_diabetes_wf.yaml
-qlaunch -q my_qadapter1.yaml rapidfire & qlaunch -q my_qadapter2.yaml rapidfire
+qlaunch -q my_qadapter1.yaml rapidfire -m 1 & qlaunch -q my_qadapter2.yaml rapidfire -m 1
 ```
 
 If you like, you can open a second terminal to monitor the job status with

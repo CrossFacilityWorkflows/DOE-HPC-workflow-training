@@ -22,15 +22,6 @@ Go to the site:
 cd perlmutter_tutorial
 ```
 
-Edit the `settings.yml`.  Under `allowed_queues` add the workshop queue:
-```bash
-    allowed_queues:
-        doe_workflows_2023_gpu:
-            max_nodes: 2
-            max_queued_jobs: 100
-            max_walltime: 60
-```
-
 Now start the site:
 ```bash
 balsam site start
